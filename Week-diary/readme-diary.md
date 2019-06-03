@@ -8,12 +8,16 @@ GitHub at least once a week (can be more frequent).
 The content of the file should be brief but clear. 
 
 For example, it should be like:
+
 Week 1
+
 Group formed. I created the Trello & GitHub accounts for the team. Together
 with John Smith, I wrote the Epic section of the proposal. I also found and
 discussed with the team all available software tools and libraries that we
 can use for the project.
+
 Week 2
+
 I wrote the first version of hello.c, api.h, api.c and drafted a design for
 the Web service API between the client and the server – all by myself.
 
