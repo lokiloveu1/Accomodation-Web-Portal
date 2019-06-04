@@ -1,0 +1,2 @@
+week1:
+We chose the project 3 as our topic. I discussed with the team members and found that we would use python for the backend and vue for the frontend.
