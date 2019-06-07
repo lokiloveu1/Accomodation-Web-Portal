@@ -1,8 +1,13 @@
 Week1
 I am so exciting to get into our brand new project.
+Discuss with our team member to decide the topic of our project.
+We all agree with topic 3:Accommodation Web Portal.
+So I habe done a lot of research for how to build a online reservation platform.
 I have done the work below:
 Set up Github repo;
 Set up trello account;
-Make contributions to our proposal draft;
+Make contributions to our proposal draft:
+Project depth and scale;
+Schedule;
 
 
