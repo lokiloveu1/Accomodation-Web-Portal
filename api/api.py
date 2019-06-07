@@ -26,7 +26,7 @@ api = Api(app,default="api for Accommodation Web Portal",
 
 #------------------------Operations about user-------------------------
 user_model = api.model('user_account',{
-    'email': fields.String
+    'email': fields.String,
     'username': fields.String,
     'password': fields.String,
     })
@@ -68,7 +68,7 @@ class create_host(Resource):
 
         return {"-"},200
     
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+'''                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 @api.route('/api/user/login') # log in (Authenticate with the REST API)
 class login(Resource):
    
@@ -77,7 +77,7 @@ class login(Resource):
     @api.response(404,'Error') #User not exist / wrong password
     @api.doc(description="log in")
     @api.expect(user_model,validate=True)
-    
+'''    
     
     
 if __name__ == '__main__':
