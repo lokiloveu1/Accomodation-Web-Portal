@@ -1,2 +1,4 @@
 Week 1:
 We decided on Project 3 and created Github and Trello accounts. We planned to do some initial research so that we can meet later in the week and have a more concrete discussion on what technologies to use, where to get data, etc.
+
+We ended up deciding to use a Python/Flask backend, a Vue frontend, with a Postgres server. I set up the database models using the SQL Alchemy ORM and the database migrations. I also wrote a create user endpoint to make sure the DB code was set up correctly.
