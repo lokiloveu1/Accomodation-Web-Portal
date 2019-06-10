@@ -1,4 +1,5 @@
-from app import app
+from app import app, db
+from app.models import User
 from flask_restplus import Resource, Api, fields, inputs, reqparse
 
 api = Api(app,default="api for Accommodation Web Portal",  
@@ -6,39 +7,29 @@ api = Api(app,default="api for Accommodation Web Portal",
           description="api for Accommodation Web Portal")
 
 @api.route('/api/user') #create user
-class User(Resource):
-    @api.response(201, 'user Created')
+class RegisterUser(Resource):
+    @api.response(201, 'User created')
     @api.response(400,'Invalid input')
-    @api.response(404,'Failed')
     def post(self):
+        parser = reqparse.RequestParser()
 
-        if request.content_type != JSON_MIME_TYPE:
-            error = json.dumps({'error': 'Invalid Content Type'})
-            return json_response(error, 400)
+        parser.add_argument('username', required=True, help='Username cannot be blank.')
+        parser.add_argument('email', required=True, help='Email cannot be blank.')
+        parser.add_argument('password', required=True, help='Password cannot be blank.')
+        parser.add_argument('is_host')
+        args = parser.parse_args()
 
-        input_payload = request.json
-        
-        if not input_payload.get('email'):
-            return {"message":"Missing email"},400
-        email = input_payload['email']
-        email =str(email)
-        #check if email already used
-        
-        if not input_payload.get('username'):
-            return {"message":"Missing username"},400
-        username = input_payload['username']
-        username =str(username)
-        #check if username already used; validation
-        
-        if not input_payload.get('password'):
-            return {"message":"Missing password"},400
-        password = input_payload['password']
-        password =str(password)
-        #check validation
+        new_user = User(
+            username=args.username,
+            email=args.email,
+        )
 
-        #assign an userid
-        #if user table is empty,set userid as 0
-        #otherwise get the latest user's id and plus 1
+        # hashes input password, and sets password_hash field
+        new_user.set_password(args.password)
+        db.session.add(new_user)
+
+        # handle this error. duplicate email/username, etc.
+        db.session.commit()
 
         return {'msg': 'user successfully created'}, 201
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
