@@ -6,5 +6,5 @@ class Config(object):
 
     # DB config
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+        'postgresql://comp9900:comp9900@localhost:5432/comp9900'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

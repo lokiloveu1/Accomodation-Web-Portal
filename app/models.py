@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.dialects import postgresql
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +39,7 @@ class Accommodation(db.Model):
     country = db.Column(db.String(32), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     property_type = db.Column(db.String(32), nullable=False)
-    amenities = db.Column(db.Text)
+    amenities = db.Column(postgresql.ARRAY(db.String(32)))
     rating = db.Column(db.Float)
     num_reviews = db.Column(db.Integer, nullable=False)
 
