@@ -1,36 +1,33 @@
 <template>
   <div style="margin-left: 5%;margin-right: 5%">
-    <a-row class="btn-header" type="flex" justify="end" >
-      <a-button class="btn-login" v-on:click="login" :size="size">Log in</a-button>
-      <a-button   v-on:click="signup" :size="size">Sign up</a-button>
-    </a-row>
-
-    <a-carousel autoplay>
+    <LoginHeader></LoginHeader>
+    <a-carousel autoplay style="margin-top: 30px">
       <div
         slot="prevArrow" slot-scope="props"
         class="custom-slick-arrow"
         style="left: 10px;zIndex: 1"
       >
-        <a-icon type="left-circle" />
+        <a-icon type="left-circle"/>
       </div>
       <div
         slot="nextArrow" slot-scope="props"
         class="custom-slick-arrow"
         style="right: 10px"
       >
-        <a-icon type="right-circle" />
+        <a-icon type="right-circle"/>
       </div>
-      <div><h3>1</h3></div>
-      <div><h3>2</h3></div>
-      <div><h3>3</h3></div>
-      <div><h3>4</h3></div>
+      <div><img src="https://voith.com/aus-en/1280x300_sydney-opera-house.png"></div>
+      <div><img src="http://australiatravels.net/images/inner_banner11.jpg"></div>
+      <div><img src="https://promolover.com/media/t/3VSGDZg-iVhF_1280x300_Xe3lowe7.jpg"></div>
+      <div><img src="http://dingyue.nosdn.127.net/2yibhtfaEh0H7L8qIkVpYxTghx3vQT7pvgGv6TR3djUJh1524792141605.jpg"></div>
     </a-carousel>
     <h1 style="margin-top: 30px">NSW BNB</h1>
     <h3>Find your ideal hotel in NSW</h3>
     <div id="search-line" style="margin-top: 50px">
 
 
-      <a-input size="large" placeholder="e.g. Kingsford" style="width: 200px;margin: 0 8px 8px 0;"/>
+      <a-input size="large" placeholder="e.g. Kingsford" style="width: 200px;margin: 0 8px 8px 0;"
+               v-model="inputRegion"/>
 
       <a-date-picker
         :disabledDate="disabledStartDate"
@@ -39,8 +36,7 @@
         v-model="startValue"
         placeholder="Check-in"
         @openChange="handleStartOpenChange"
-        size="large"
-      />
+        size="large"></a-date-picker>
       <a-date-picker
         :disabledDate="disabledEndDate"
         showTime
@@ -50,80 +46,90 @@
         :open="endOpen"
         @openChange="handleEndOpenChange"
         size="large"
-      />
+      ></a-date-picker>
       <a-select
         :size="size"
         defaultValue="number of guest"
         style="width: 150px"
         @change="handleChange"
+        v-model="guestValue"
       >
         <a-select-option v-for="i in 5" :key="i">
           {{i}}
         </a-select-option>
       </a-select>
-      <a-button type="primary" icon="search" :size="size">Search</a-button>
+      <a-button type="primary" icon="search" :size="size" v-on:click="search">Search</a-button>
 
     </div>
 
     <div style="padding: 20px;margin-top:50px;">
-      <a-row :gutter="16">
-        <a-col :span="6">
-          <a-card title="title" :bordered=true>
+      <a-list
+        :grid="{ gutter: 16, column: 4 }"
+        :dataSource="data"
+      >
+        <a-list-item slot="renderItem" slot-scope="item, index">
+          <a-card :title="item.title" v-on:click="show_detail">
             <img
               alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              :src="item.image"
               slot="cover"
             />
-            <p>content</p>
+            <div style="text-align: left">
+              <h3>{{item.name}}</h3>
+              <span>{{item.price}}</span><br>
+              <a-rate :defaultValue="2.5" allowHalf disabled/>
+            </div>
           </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card title="title" :bordered=true>
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-              slot="cover"
-            />
-            <p>content</p>
-          </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card title="title" :bordered=true>
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-              slot="cover"
-            />
-            <p>content</p>
-          </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card title="title" :bordered=true>
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-              slot="cover"
-            />
-            <p>content</p>
-          </a-card>
-        </a-col>
-
-      </a-row>
+        </a-list-item>
+      </a-list>
     </div>
-
+    <!--back to top-->
+    <a-back-top  :visibilityHeight="200"/>
 
   </div>
 
 </template>
 
 <script>
+  import LoginHeader from '../components/LoginHeader'
+
+  const data = [
+    {
+      title: 'Title 1',
+      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      name:'name',
+      price: '$100'
+    },
+    {
+      title: 'Title 2',
+      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      name:'name',
+      price: '$200'
+    },
+    {
+      title: 'Title 3',
+      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      name:'name',
+      price: '$300'
+    },
+    {
+      title: 'Title 4',
+      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      name:'name',
+      price: '$400'
+    },
+  ]
   export default {
+    components: {LoginHeader},
     data() {
       return {
         startValue: null,
         endValue: null,
         endOpen: false,
-        size: 'large'
+        size: 'large',
+        data,
+        inputRegion: '',
+        guestValue: ''
       }
     },
     watch: {
@@ -160,13 +166,16 @@
       handleChange(value) {
         console.log(`Selected: ${value}`);
       },
-      login(){
-        this.$router.push('/login')
+      show_detail() {
+        this.$router.push('/detailpage')
       },
-      signup(){
-        this.$router.push('/signup')
+      search() {
+        this.$router.push('/searchresult')
+
       }
     },
+
+
   }
 </script>
 
@@ -174,6 +183,7 @@
   input::placeholder {
     color: black
   }
+
   .ant-carousel >>> .slick-slide {
     text-align: center;
     height: 300px;
@@ -187,24 +197,21 @@
     height: 25px;
     font-size: 25px;
     color: #fff;
-    background-color: rgba(31,45,61,.11);
+    background-color: rgba(31, 45, 61, .11);
     opacity: 0.3;
   }
+
   .ant-carousel >>> .custom-slick-arrow:before {
     display: none;
   }
+
   .ant-carousel >>> .custom-slick-arrow:hover {
     opacity: 0.5;
   }
 
-  .ant-carousel >>> .slick-slide  h3 {
+  .ant-carousel >>> .slick-slide h3 {
     color: #fff;
   }
-  .btn-login {
-    margin-right: 10px;
-  }
-  .btn-header {
-    margin-bottom: 10px;
-  }
+
 
 </style>
