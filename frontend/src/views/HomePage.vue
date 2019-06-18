@@ -52,7 +52,6 @@
         defaultValue="number of guest"
         style="width: 150px"
         @change="handleChange"
-        v-model="guestValue"
       >
         <a-select-option v-for="i in 5" :key="i">
           {{i}}
@@ -96,25 +95,25 @@
   const data = [
     {
       title: 'Title 1',
-      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      image: 'https://a0.muscache.com/4ea/air/v2/pictures/6c47e064-b55a-46ce-85ec-c7a15830d69c.jpg',
       name:'name',
       price: '$100'
     },
     {
       title: 'Title 2',
-      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      image: 'https://a0.muscache.com/4ea/air/v2/pictures/7688a6e9-dd4b-4986-a051-e4e6c7fdc2e7.jpg',
       name:'name',
       price: '$200'
     },
     {
       title: 'Title 3',
-      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      image: 'https://a0.muscache.com/im/pictures/101834773/304fe82a_original.jpg?aki_policy=large',
       name:'name',
       price: '$300'
     },
     {
       title: 'Title 4',
-      image: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+      image: 'https://a0.muscache.com/im/pictures/eee320dd-8eeb-4194-8027-85cdb9492065.jpg',
       name:'name',
       price: '$400'
     },
@@ -128,16 +127,17 @@
         endOpen: false,
         size: 'large',
         data,
-        inputRegion: '',
-        guestValue: ''
+        inputRegion: ''
       }
     },
     watch: {
       startValue(val) {
         console.log('startValue', val)
+        this.$store.commit("updateCheckIn",val)
       },
       endValue(val) {
         console.log('endValue', val)
+        this.$store.commit("updateCheckOut",val)
       }
     },
     methods: {
@@ -165,6 +165,7 @@
       },
       handleChange(value) {
         console.log(`Selected: ${value}`);
+        this.$store.commit("updateGuestNumber",value)
       },
       show_detail() {
         this.$router.push('/detailpage')
@@ -174,8 +175,11 @@
 
       }
     },
-
-
+    computed:{
+      guestnumber(){
+        return this.$store.state.guest_number
+      }
+    }
   }
 </script>
 

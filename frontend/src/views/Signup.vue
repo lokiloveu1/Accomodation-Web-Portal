@@ -9,7 +9,8 @@
           </div><br/>
           <div class="login-label">
             <label>Email address</label>
-            <a-input id="email-add" size="large" placeholder="Email address" />
+            <a-input id="email-add" size="large" placeholder="Email address" name="email" v-validate="'email'"/>
+            <span style="color: red">{{ errors.first('email') }}</span>
           </div>
           <div class="login-label">
             <label>Username</label>
@@ -17,9 +18,10 @@
           </div>
           <div class="login-label">
             <label>Password</label>
-            <a-input size="large" type="text" v-if="pwdtype" v-model="eyetxt"></a-input>
-            <a-input  size="large" placeholder="Password" type="password" v-model="eyetxt" v-else/>
+            <a-input size="large" type="text" v-if="pwdtype" v-model="eyetxt" name="password" v-validate="{'required':'true','min':8}"></a-input>
+            <a-input  size="large" placeholder="Password" type="password" v-model="eyetxt" name="password" v-validate="{'required':'true','min':8}" v-else/>
             <password v-model="eyetxt" :strength-meter-only="true"></password>
+            <span style="color: red">{{ errors.first('password') }}</span>
           </div>
           <div style="text-align: left">
             <a-checkbox @change="onChange">Show password</a-checkbox>

@@ -9,15 +9,17 @@
             </div><br/>
             <div class="login-label">
               <label>Email address</label>
-              <a-input id="email-add" size="large" placeholder="Email address" v-model="email"/>
+              <a-input id="email-add" size="large" placeholder="Email address" v-model="email" name="email" v-validate="'email'"/>
+              <span style="color: red">{{ errors.first('email') }}</span>
             </div>
             <span v-show="warningPwd" style="color: red">Password is empty.</span>
             <span v-show="warningPwd1" style="color: red">Password is wrong.</span>
             <div class="login-label">
               <label>Password</label>
 
-              <a-input size="large" type="text" v-if="pwdtype" v-model="eyetxt"></a-input>
-              <a-input  size="large" placeholder="Password" type="password" v-model="eyetxt" v-else/>
+              <a-input size="large" type="text" v-if="pwdtype" v-model="eyetxt" name="password" v-validate="{'required':'true','min':8}"></a-input>
+              <a-input  size="large" placeholder="Password" type="password" v-model="eyetxt" name="password" v-validate="{'required':'true','min':8}" v-else/>
+              <span style="color: red">{{ errors.first('password') }}</span>
             </div>
             <div >
               <div style="text-align: left;display: inline">
