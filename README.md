@@ -1,4 +1,8 @@
 
+Built a web application and android mobile application that provides services including user registration/login/logout/settings/reservation and property management, accommodation posting/searching/booking/reviewing, along with a personalised user-oriented and item-based recommendation system.
+
+
+
 # More detailed instructions to come...
 
 # Required tools
